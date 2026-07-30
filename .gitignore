@@ -40,8 +40,13 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+#our files
+.gitignore
+
 # AI & Agent Skills
 .agents/
 .claude/
 skills-lock.json
 *.output
+AGENTS.md
+cLAUDE.md
