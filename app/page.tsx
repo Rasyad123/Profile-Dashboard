@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const Lanyard = dynamic(() => import("./components/Lanyard"), { ssr: false });
 
 export default function Home() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
@@ -22,11 +25,13 @@ export default function Home() {
     {
       name: "React.js",
       icon: (
-        <svg viewBox="0 0 100 100" className="w-12 h-12 text-[#61DAFB]">
-          <circle cx="50" cy="50" r="10" fill="currentColor" />
-          <ellipse cx="50" cy="50" rx="38" ry="14" fill="none" stroke="currentColor" strokeWidth="6" />
-          <ellipse cx="50" cy="50" rx="38" ry="14" fill="none" stroke="currentColor" strokeWidth="6" transform="rotate(60 50 50)" />
-          <ellipse cx="50" cy="50" rx="38" ry="14" fill="none" stroke="currentColor" strokeWidth="6" transform="rotate(120 50 50)" />
+        <svg viewBox="-11.5 -10.23174 23 20.46348" className="w-12 h-12">
+          <circle cx="0" cy="0" r="2.05" fill="#61DAFB" />
+          <g stroke="#61DAFB" strokeWidth="1" fill="none">
+            <ellipse rx="11" ry="4.2" />
+            <ellipse rx="11" ry="4.2" transform="rotate(60)" />
+            <ellipse rx="11" ry="4.2" transform="rotate(120)" />
+          </g>
         </svg>
       ),
     },
@@ -296,33 +301,17 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right Column: Hanging 3D ID Card Badge with Photo */}
-            <div className="lg:col-span-5 flex justify-center lg:justify-end relative">
-              {/* Lanyard & Ribbon Strap */}
-              <div className="flex flex-col items-center relative">
-                {/* Lanyard Ribbon extending from top */}
-                <div className="w-8 h-28 bg-gradient-to-b from-slate-900 to-black border-x border-slate-700 flex flex-col items-center justify-around py-2 text-[8px] font-mono text-slate-400 tracking-widest uppercase rotate-180 shadow-md">
-                  <span className="rotate-90">3D CARD</span>
-                  <span className="rotate-90">3D CARD</span>
-                </div>
-                {/* Metal Clip Ring */}
-                <div className="w-5 h-6 rounded-t-md border-2 border-slate-400 bg-slate-800 -mt-1 z-10" />
-
-                {/* 3D Hanging ID Card Frame */}
-                <div className="relative w-72 sm:w-80 aspect-[3/4] rounded-2xl bg-white p-3 shadow-[0_20px_50px_rgba(0,0,0,0.8)] border border-slate-200 transform hover:rotate-1 hover:scale-105 transition-transform duration-500">
-                  <div className="relative w-full h-full rounded-xl overflow-hidden bg-slate-900 border border-slate-200">
-                    <Image
-                      src="/profile-photo.webp"
-                      alt="Profile Photo ID Card"
-                      fill
-                      priority
-                      sizes="400px"
-                      className="object-cover object-top grayscale hover:grayscale-0 transition-all duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-40 pointer-events-none" />
-                  </div>
-                </div>
-              </div>
+            {/* Right Column: Interactive 3D Physics Lanyard Card */}
+            <div className="lg:col-span-5 flex justify-center lg:justify-end relative w-full h-[800px]">
+              <Lanyard
+                position={[0, 0, 22]}
+                gravity={[0, -40, 0]}
+                frontImage="/profile-photo.webp"
+                backImage="/profile-photo.webp"
+                imageFit="cover"
+                lanyardImage="/lanyard.png"
+                lanyardWidth={3.2}
+              />
             </div>
           </div>
 
