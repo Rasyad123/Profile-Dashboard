@@ -1,26 +1,107 @@
 @import "tailwindcss";
 
+@theme {
+  --color-slate-950: #0B0F19;
+  --color-slate-900: #111827;
+  --color-slate-800: #1E293B;
+  --color-cyan-glow: #00E5FF;
+  --color-coral-fire: #FF4D4D;
+  --color-amber-alert: #FFB800;
+
+  --font-display: var(--font-space-grotesk), sans-serif;
+  --font-body: var(--font-plus-jakarta), sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --bg-dark: #0B0F19;
+  --card-bg: rgba(17, 24, 39, 0.7);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-dark);
+  color: #E2E8F0;
+  font-family: var(--font-plus-jakarta), sans-serif;
+}
+
+/* Custom Tactical Grid & Aesthetic Backgrounds */
+.bg-tactical-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.bg-sunset-glow {
+  background: radial-gradient(circle at 50% 30%, rgba(255, 120, 80, 0.15) 0%, rgba(147, 51, 234, 0.08) 45%, rgba(11, 15, 25, 0) 75%);
+}
+
+/* Animations */
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes pulseSunset {
+  0%, 100% {
+    box-shadow: 0 0 30px rgba(249, 115, 22, 0.25), 0 0 60px rgba(168, 85, 247, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 45px rgba(249, 115, 22, 0.4), 0 0 85px rgba(236, 72, 153, 0.25);
+  }
+}
+
+@keyframes bounceSlow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+
+.animate-float {
+  animation: floatSlow 5s ease-in-out infinite;
+}
+
+.animate-sunset-glow {
+  animation: pulseSunset 4s ease-in-out infinite;
+}
+
+.animate-bounce-slow {
+  animation: bounceSlow 2s ease-in-out infinite;
+}
+
+/* Corner Bracket Utility */
+.corner-brackets {
+  position: relative;
+}
+.corner-brackets::before,
+.corner-brackets::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: rgba(249, 115, 22, 0.5);
+  pointer-events: none;
+}
+.corner-brackets::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid;
+  border-left: 2px solid;
+}
+.corner-brackets::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
 }
