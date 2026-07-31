@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import SpotlightCard from "./components/SpotlightCard";
+import BorderGlow from "./components/BorderGlow";
 
 const Lanyard = dynamic(() => import("./components/Lanyard"), { ssr: false });
 
@@ -306,8 +308,8 @@ export default function Home() {
               <Lanyard
                 position={[0, 0, 22]}
                 gravity={[0, -40, 0]}
-                frontImage="/profile-photo.webp"
-                backImage="/profile-photo.webp"
+                frontImage="/profile-photo.jpg"
+                backImage="/profile-photo.jpg"
                 imageFit="cover"
                 lanyardImage="/lanyard.png"
                 lanyardWidth={3.2}
@@ -334,20 +336,33 @@ export default function Home() {
               </p>
             </div>
 
-            {/* TECH STACK GRID */}
+            {/* TECH STACK GRID WITH BORDER GLOW & SPOTLIGHT COMBINATION */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 pt-4">
               {techItems.map((item, idx) => (
-                <div
+                <BorderGlow
                   key={idx}
-                  className="bg-[#121824]/90 border border-slate-800/80 hover:border-slate-600 rounded-2xl p-6 flex flex-col items-center justify-center gap-4 hover:scale-105 hover:shadow-[0_0_25px_rgba(0,0,0,0.5)] transition-all group"
+                  backgroundColor="#121824"
+                  borderRadius={16}
+                  glowColor="199 89% 60%"
+                  glowRadius={25}
+                  glowIntensity={0.8}
+                  coneSpread={30}
+                  edgeSensitivity={20}
+                  colors={["#00E5FF", "#FF4D4D", "#FFB800"]}
+                  className="hover:scale-105 transition-transform duration-300"
                 >
-                  <div className="transition-transform group-hover:scale-110 flex items-center justify-center">
-                    {item.icon}
-                  </div>
-                  <span className="font-mono text-xs font-semibold text-slate-300 group-hover:text-white transition-colors">
-                    {item.name}
-                  </span>
-                </div>
+                  <SpotlightCard
+                    className="bg-transparent border-none p-6 flex flex-col items-center justify-center gap-4 group !overflow-hidden"
+                    spotlightColor="rgba(56, 189, 248, 0.25)"
+                  >
+                    <div className="transition-transform group-hover:scale-110 flex items-center justify-center">
+                      {item.icon}
+                    </div>
+                    <span className="font-mono text-xs font-semibold text-slate-300 group-hover:text-white transition-colors relative z-10">
+                      {item.name}
+                    </span>
+                  </SpotlightCard>
+                </BorderGlow>
               ))}
             </div>
           </div>

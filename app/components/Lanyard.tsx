@@ -185,6 +185,7 @@ function Band({
   const frontTex = useTexture(frontImage || BLANK_PIXEL);
   const backTex = useTexture(backImage || BLANK_PIXEL);
 
+  // Composite the front/back images into the card's texture atlas (exact React Bits implementation)
   const cardMap = useMemo(() => {
     const baseMap = materials.base.map as THREE.Texture;
     if (!frontImage && !backImage) return baseMap;
@@ -199,10 +200,11 @@ function Band({
     const ctx = canvas.getContext('2d');
     if (!ctx) return baseMap;
 
+    // Keep the original baked atlas for the card edges and any untouched face.
     ctx.drawImage(baseImg, 0, 0, W, H);
 
     const drawFitted = (img: any, rect: typeof FRONT_UV_RECT) => {
-      if (!img || !img.width) return;
+      if (!img || !img.width || img.width <= 1) return;
       const rx = rect.x * W;
       const ry = rect.y * H;
       const rw = rect.w * W;
@@ -328,7 +330,7 @@ function Band({
           >
             <mesh geometry={nodes.card.geometry}>
               <meshPhysicalMaterial
-                map={cardMap || materials.base.map}
+                map={cardMap}
                 map-anisotropy={16}
                 clearcoat={isMobile ? 0 : 1}
                 clearcoatRoughness={0.15}
