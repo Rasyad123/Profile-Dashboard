@@ -29,8 +29,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "2P SYNC // Tactical Co-op Telemetry & Synergy Hub",
-  description: "Real-time dual-player combat sync, synergy rating telemetry, and loadout resonance matrix.",
+  title: "Rasyad Fajar Dashboard",
+  description: "Rasyad Fajar Dashboard Portofolio"
 };
 
 export default function RootLayout({
