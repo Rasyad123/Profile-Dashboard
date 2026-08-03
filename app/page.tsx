@@ -5,6 +5,7 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import SpotlightCard from "./components/SpotlightCard";
 import BorderGlow from "./components/BorderGlow";
+import OrbitImages from "./components/OrbitImages";
 
 const Lanyard = dynamic(() => import("./components/Lanyard"), { ssr: false });
 
@@ -198,7 +199,7 @@ export default function Home() {
           <div className="relative z-10 max-w-2xl text-left my-auto space-y-6">
             <h1 className="font-[family-name:var(--font-space-grotesk)] text-4xl sm:text-6xl md:text-7xl font-extrabold text-white tracking-tight leading-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
               Welcome to <br />
-              <span className="bg-gradient-to-r from-orange-400 via-pink-400 to-amber-300 bg-clip-text text-transparent">
+              <span className="text-[#F8F9FA]">
                 My Dashboard
               </span>
             </h1>
@@ -207,49 +208,19 @@ export default function Home() {
             <div className="flex flex-wrap items-center gap-4 pt-2 font-mono text-xs">
               <a
                 href="#about"
-                className="px-7 py-3.5 rounded-xl font-bold bg-gradient-to-r from-orange-500 to-pink-600 text-white shadow-[0_0_25px_rgba(249,115,22,0.5)] hover:shadow-[0_0_35px_rgba(249,115,22,0.7)] hover:scale-105 transition-all"
+                className="px-7 py-3.5 rounded-xl font-bold bg-transparent border-2 border-white/20 text-[#F8F9FA] hover:border-white/60 hover:bg-white/5 transition-all"
               >
                 TENTANG SAYA ↓
               </a>
               <a
                 href="#portfolio"
-                className="px-7 py-3.5 rounded-xl font-bold bg-black/50 backdrop-blur-md text-white border border-white/20 hover:border-orange-400 hover:text-orange-300 transition-all"
+                className="px-7 py-3.5 rounded-xl font-bold bg-transparent border-2 border-white/20 text-[#F8F9FA] hover:border-white/60 hover:bg-white/5 transition-all"
               >
                 PORTFOLIO
               </a>
             </div>
           </div>
-
-          {/* Bottom Dynamic Animated Scroll Indicator */}
-          <a href="#about" className="relative z-10 flex flex-col items-center gap-2 group cursor-pointer self-center">
-            <span className="text-[11px] font-mono text-orange-200 group-hover:text-orange-400 transition-colors tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-              GULIR KE ABOUT
-            </span>
-            <div className="w-6 h-10 border-2 border-orange-400/60 bg-black/40 backdrop-blur-sm group-hover:border-orange-400 rounded-full flex justify-center p-1.5 transition-colors shadow-[0_0_12px_rgba(249,115,22,0.3)]">
-              <div className="w-1.5 h-2.5 bg-orange-400 rounded-full animate-bounce-slow" />
-            </div>
-          </a>
         </section>
-
-        {/* CATCHY SCROLL TRANSITION SEPARATOR (Home -> About) */}
-        <div className="relative w-full overflow-hidden leading-none bg-[#0B0F19]">
-          <svg
-            viewBox="0 0 1200 120"
-            preserveAspectRatio="none"
-            className="relative block w-full h-16 sm:h-24 text-[#0B0F19]"
-          >
-            <path
-              d="M0,0 C150,90 350,-40 500,40 C650,120 900,10 1200,50 L1200,120 L0,120 Z"
-              fill="currentColor"
-            />
-          </svg>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-            <div className="px-4 py-1.5 rounded-full bg-slate-900 border border-orange-500/40 text-orange-400 font-mono text-[11px] tracking-wider shadow-[0_0_15px_rgba(249,115,22,0.25)] flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-orange-400" />
-              <span>SECTION TRANSITION // ABOUT ME</span>
-            </div>
-          </div>
-        </div>
 
         {/* SECTION 2: ABOUT (Matching Screenshot Style) */}
         <section id="about" className="bg-[#0B0F19] bg-tactical-grid min-h-screen py-24 px-6 md:px-16 flex flex-col justify-between border-b border-slate-800/80 relative">
@@ -323,11 +294,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* SECTION 3: TECH STACK SHOWCASE */}
-        <section id="portfolio" className="bg-tactical-grid bg-[#0B0F19] py-24 px-4 md:px-8 border-b border-slate-800/80 relative">
-          <div className="max-w-6xl mx-auto space-y-12">
+        {/* SECTION 3: TECH STACK SHOWCASE WITH ORBIT IMAGES & SPOTLIGHT */}
+        <section id="portfolio" className="bg-tactical-grid bg-[#0B0F19] pt-16 pb-24 px-4 md:px-8 border-b border-slate-800/80 relative overflow-hidden min-h-[750px] flex flex-col justify-start">
+          <div className="max-w-6xl mx-auto w-full space-y-12">
             {/* Header Title */}
-            <div className="text-center space-y-3">
+            <div className="text-center space-y-3 z-10 relative">
               <h2 className="font-[family-name:var(--font-space-grotesk)] text-4xl sm:text-6xl font-extrabold text-white tracking-tight">
                 Tech Stack
               </h2>
@@ -336,35 +307,35 @@ export default function Home() {
               </p>
             </div>
 
-            {/* TECH STACK GRID WITH BORDER GLOW & SPOTLIGHT COMBINATION */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 pt-4">
-              {techItems.map((item, idx) => (
-                <BorderGlow
-                  key={idx}
-                  backgroundColor="#121824"
-                  borderRadius={16}
-                  glowColor="199 89% 60%"
-                  glowRadius={25}
-                  glowIntensity={0.8}
-                  coneSpread={30}
-                  edgeSensitivity={20}
-                  colors={["#00E5FF", "#FF4D4D", "#FFB800"]}
-                  className="hover:scale-105 transition-transform duration-300"
-                >
-                  <SpotlightCard
-                    className="bg-transparent border-none p-6 flex flex-col items-center justify-center gap-4 group !overflow-hidden"
-                    spotlightColor="rgba(56, 189, 248, 0.25)"
+            {/* Orbiting Animation with Cards & Path */}
+            <div className="h-[550px] w-full flex items-center justify-center overflow-visible relative mt-4">
+              <OrbitImages
+                customItems={techItems.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="w-28 h-24 bg-[#121824]/95 border border-slate-800 rounded-2xl p-3 flex flex-col items-center justify-center gap-1.5 shadow-xl backdrop-blur-md hover:border-slate-600 transition-colors group cursor-pointer"
                   >
-                    <div className="transition-transform group-hover:scale-110 flex items-center justify-center">
+                    <div className="w-8 h-8 flex items-center justify-center transition-transform group-hover:scale-110">
                       {item.icon}
                     </div>
-                    <span className="font-mono text-xs font-semibold text-slate-300 group-hover:text-white transition-colors relative z-10">
+                    <span className="font-mono text-[10px] font-semibold text-slate-300 group-hover:text-white transition-colors text-center leading-tight">
                       {item.name}
                     </span>
-                  </SpotlightCard>
-                </BorderGlow>
-              ))}
+                  </div>
+                ))}
+                shape="ellipse"
+                radiusX={520}
+                radiusY={140}
+                rotation={-3}
+                duration={35}
+                itemSize={110}
+                showPath={true}
+                pathColor="rgba(255, 255, 255, 0.15)"
+                pathWidth={2}
+                responsive={true}
+              />
             </div>
+
           </div>
         </section>
 
