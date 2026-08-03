@@ -156,11 +156,11 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-[#E2E8F0] flex flex-col font-[family-name:var(--font-plus-jakarta)] selection:bg-orange-500/30 selection:text-orange-300">
+    <div className="min-h-screen w-full overflow-x-hidden bg-[#0B0F19] text-[#E2E8F0] flex flex-col font-[family-name:var(--font-plus-jakarta)] selection:bg-orange-500/30 selection:text-orange-300">
       {/* Fully Transparent Fixed Navigation */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-transparent px-6 py-5 transition-all">
-        <div className="max-w-7xl mx-auto flex items-center justify-end">
-          <nav className="flex items-center gap-1 sm:gap-6 font-mono text-xs text-slate-200 bg-black/40 backdrop-blur-md px-5 py-2.5 rounded-full border border-white/10 shadow-lg">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-transparent px-4 sm:px-6 py-3 sm:py-5 transition-all">
+        <div className="max-w-7xl mx-auto flex items-center justify-center sm:justify-end">
+          <nav className="flex items-center gap-1 sm:gap-6 font-mono text-[11px] sm:text-xs text-slate-200 bg-black/50 backdrop-blur-md px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full border border-white/10 shadow-lg max-w-full overflow-x-auto whitespace-nowrap">
             <a href="#home" className="px-3.5 py-1.5 rounded-full hover:text-orange-400 hover:bg-white/10 transition-colors">
               Home
             </a>
@@ -179,7 +179,7 @@ export default function Home() {
 
       <main className="flex-1">
         {/* SECTION 1: HOME (Full Screen Pixel Sunset Image Hero) */}
-        <section id="home" className="relative h-screen w-full flex flex-col justify-between items-start overflow-hidden pt-20 pb-8 px-6 md:px-16">
+        <section id="home" className="relative min-h-screen w-full flex flex-col justify-between items-start overflow-hidden pt-24 pb-12 px-5 sm:px-8 md:px-16">
           {/* Fullscreen Background Image */}
           <div className="absolute inset-0 z-0">
             <Image
@@ -196,8 +196,8 @@ export default function Home() {
           </div>
 
           {/* Left-Middle Content Overlay */}
-          <div className="relative z-10 max-w-2xl text-left my-auto space-y-6">
-            <h1 className="font-[family-name:var(--font-space-grotesk)] text-4xl sm:text-6xl md:text-7xl font-extrabold text-white tracking-tight leading-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
+          <div className="relative z-10 max-w-2xl text-left my-auto space-y-4 sm:space-y-6">
+            <h1 className="font-[family-name:var(--font-space-grotesk)] text-2xl sm:text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
               Welcome to <br />
               <span className="text-[#F8F9FA]">
                 My Dashboard
@@ -205,16 +205,16 @@ export default function Home() {
             </h1>
 
             {/* Left Aligned CTA Buttons */}
-            <div className="flex flex-wrap items-center gap-4 pt-2 font-mono text-xs">
+            <div className="flex flex-wrap items-center gap-2.5 sm:gap-4 pt-2 font-mono text-[10px] sm:text-xs">
               <a
                 href="#about"
-                className="px-7 py-3.5 rounded-xl font-bold bg-transparent border-2 border-white/20 text-[#F8F9FA] hover:border-white/60 hover:bg-white/5 transition-all"
+                className="px-4 sm:px-7 py-2.5 sm:py-3.5 rounded-xl font-bold bg-transparent border-2 border-white/20 text-[#F8F9FA] hover:border-white/60 hover:bg-white/5 transition-all"
               >
                 TENTANG SAYA ↓
               </a>
               <a
                 href="#portfolio"
-                className="px-7 py-3.5 rounded-xl font-bold bg-transparent border-2 border-white/20 text-[#F8F9FA] hover:border-white/60 hover:bg-white/5 transition-all"
+                className="px-4 sm:px-7 py-2.5 sm:py-3.5 rounded-xl font-bold bg-transparent border-2 border-white/20 text-[#F8F9FA] hover:border-white/60 hover:bg-white/5 transition-all"
               >
                 PORTFOLIO
               </a>
@@ -223,40 +223,40 @@ export default function Home() {
         </section>
 
         {/* SECTION 2: ABOUT (Matching Screenshot Style) */}
-        <section id="about" className="bg-[#0B0F19] bg-tactical-grid min-h-screen py-24 px-6 md:px-16 flex flex-col justify-between border-b border-slate-800/80 relative">
-          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center my-auto">
+        <section id="about" className="bg-[#0B0F19] bg-tactical-grid min-h-screen py-12 sm:py-24 px-4 sm:px-6 md:px-16 flex flex-col justify-between border-b border-slate-800/80 relative">
+          <div className="max-w-7xl mx-auto w-full grid grid-cols-12 gap-2 sm:gap-6 lg:gap-12 items-center my-auto">
             {/* Left Column: Text & Skills */}
-            <div className="lg:col-span-7 space-y-8 text-left">
+            <div className="col-span-7 space-y-3 sm:space-y-8 text-left">
               {/* Tag Header */}
-              <div className="flex items-center gap-2 text-xs font-mono text-slate-400 tracking-widest uppercase">
+              <div className="flex items-center gap-1 sm:gap-2 text-[9px] sm:text-xs font-mono text-slate-400 tracking-widest uppercase">
                 <span className="text-orange-400">✦</span>
                 <span>AVAILABLE FOR WORK</span>
               </div>
 
               {/* Big Bold Headline */}
-              <div className="space-y-1 font-[family-name:var(--font-space-grotesk)]">
-                <h2 className="text-5xl sm:text-7xl font-extrabold text-white tracking-tight leading-none">
+              <div className="space-y-0.5 sm:space-y-1 font-[family-name:var(--font-space-grotesk)]">
+                <h2 className="text-base sm:text-4xl lg:text-7xl font-extrabold text-white tracking-tight leading-none">
                   Fullstack
                 </h2>
-                <h2 className="text-5xl sm:text-7xl font-extrabold text-slate-400 tracking-tight leading-none">
+                <h2 className="text-base sm:text-4xl lg:text-7xl font-extrabold text-slate-400 tracking-tight leading-none">
                   Developer
                 </h2>
               </div>
 
               {/* Bio Subtext */}
-              <div className="space-y-3 max-w-lg">
-                <p className="text-slate-300 font-mono text-sm">Hello</p>
-                <p className="text-slate-400 text-sm leading-relaxed font-normal">
+              <div className="space-y-1 sm:space-y-3 max-w-lg">
+                <p className="text-slate-300 font-mono text-[10px] sm:text-sm">Hello</p>
+                <p className="text-slate-400 text-[10px] sm:text-sm leading-relaxed font-normal">
                   Perkenalkan nama saya Rasyad Fajar biasa di panggil Rasyad , Saya Lulusan SMA ABBS Surakarta dan sekarang Mahasiswa baru di Perguruan Tinggi Univertsitas Sebelas Maret(UNS) dengan program studi Pendidikan Teknik Informatika dan Komputer(PTIK)
                 </p>
               </div>
 
               {/* Tag Pills */}
-              <div className="flex flex-wrap gap-2.5 font-mono text-xs pt-1">
+              <div className="flex flex-wrap gap-1 sm:gap-2.5 font-mono text-[9px] sm:text-xs pt-0.5">
                 {["Typescript", "React.js", "Tailwind"].map((tech) => (
                   <span
                     key={tech}
-                    className="px-4 py-1.5 rounded-full bg-slate-900/90 border border-slate-800 text-slate-300 hover:border-orange-500/40 hover:text-white transition-colors"
+                    className="px-2 sm:px-4 py-0.5 sm:py-1.5 rounded-full bg-slate-900/90 border border-slate-800 text-slate-300 hover:border-orange-500/40 hover:text-white transition-colors"
                   >
                     {tech}
                   </span>
@@ -264,18 +264,18 @@ export default function Home() {
               </div>
 
               {/* Status Footer Lines */}
-              <div className="space-y-1.5 font-mono text-xs text-slate-500 pt-4 border-t border-slate-800/60 max-w-md">
-                <p className="flex items-center gap-2 text-slate-400">
+              <div className="space-y-1 sm:space-y-1.5 font-mono text-[9px] sm:text-xs text-slate-500 pt-2 sm:pt-4 border-t border-slate-800/60 max-w-md">
+                <p className="flex items-center gap-1 sm:gap-2 text-slate-400">
                   <span>↓</span> explore my work below
                 </p>
-                <p className="flex items-center gap-2 text-slate-400">
+                <p className="flex items-center gap-1 sm:gap-2 text-slate-400">
                   <span>↗</span> open to full-time & freelance opportunities
                 </p>
               </div>
             </div>
 
             {/* Right Column: Interactive 3D Physics Lanyard Card */}
-            <div className="lg:col-span-5 flex justify-center lg:justify-end relative w-full h-[800px]">
+            <div className="col-span-5 flex justify-center lg:justify-end relative w-full h-[350px] sm:h-[650px] lg:h-[800px]">
               <Lanyard
                 position={[0, 0, 22]}
                 gravity={[0, -40, 0]}
@@ -286,11 +286,6 @@ export default function Home() {
                 lanyardWidth={3.2}
               />
             </div>
-          </div>
-
-          {/* Scroll Down Indicator */}
-          <div className="text-center font-mono text-xs text-slate-500 tracking-widest pt-8">
-            SCROLL ↓
           </div>
         </section>
 
@@ -308,27 +303,28 @@ export default function Home() {
             </div>
 
             {/* Orbiting Animation with Cards & Path */}
-            <div className="h-[550px] w-full flex items-center justify-center overflow-visible relative mt-4">
+            <div className="h-[450px] sm:h-[500px] md:h-[550px] w-full flex items-center justify-center overflow-visible relative mt-2 sm:mt-4">
               <OrbitImages
                 customItems={techItems.map((item, idx) => (
                   <div
                     key={idx}
-                    className="w-28 h-24 bg-[#121824]/95 border border-slate-800 rounded-2xl p-3 flex flex-col items-center justify-center gap-1.5 shadow-xl backdrop-blur-md hover:border-slate-600 transition-colors group cursor-pointer"
+                    className="w-28 h-22 sm:w-32 sm:h-26 bg-[#121824]/95 border border-slate-800 rounded-2xl p-2.5 sm:p-3 flex flex-col items-center justify-center gap-1.5 shadow-xl backdrop-blur-md hover:border-slate-600 transition-colors group cursor-pointer"
                   >
-                    <div className="w-8 h-8 flex items-center justify-center transition-transform group-hover:scale-110">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center transition-transform group-hover:scale-110">
                       {item.icon}
                     </div>
-                    <span className="font-mono text-[10px] font-semibold text-slate-300 group-hover:text-white transition-colors text-center leading-tight">
+                    <span className="font-mono text-[10px] sm:text-xs font-semibold text-slate-300 group-hover:text-white transition-colors text-center leading-tight">
                       {item.name}
                     </span>
                   </div>
                 ))}
                 shape="ellipse"
-                radiusX={520}
-                radiusY={140}
+                baseWidth={850}
+                radiusX={420}
+                radiusY={160}
                 rotation={-3}
                 duration={35}
-                itemSize={110}
+                itemSize={135}
                 showPath={true}
                 pathColor="rgba(255, 255, 255, 0.15)"
                 pathWidth={2}
