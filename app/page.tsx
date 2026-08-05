@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { Home as HomeIcon, Code2, User, Mail } from "lucide-react";
 import SpotlightCard from "./components/SpotlightCard";
 import BorderGlow from "./components/BorderGlow";
 import OrbitImages from "./components/OrbitImages";
@@ -12,6 +13,36 @@ const Lanyard = dynamic(() => import("./components/Lanyard"), { ssr: false });
 export default function Home() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ["home", "about", "portfolio", "contact"];
+      const scrollPosition = window.scrollY + 200;
+
+      for (const sectionId of sections) {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const navItems = [
+    { id: "home", label: "Home", icon: HomeIcon, href: "#home" },
+    { id: "about", label: "About", icon: User, href: "#about" },
+    { id: "portfolio", label: "Work", icon: Code2, href: "#portfolio" },
+    { id: "contact", label: "Contact", icon: Mail, href: "#contact" },
+  ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -108,26 +139,10 @@ export default function Home() {
     {
       name: "Next.js",
       icon: (
-        <svg viewBox="0 0 256 256" className="w-12 h-12">
-          <defs>
-            <linearGradient id="SVGrDou6dwg" x1="55.633%" x2="83.228%" y1="56.385%" y2="96.08%">
-              <stop offset="0%" stopColor="#fff" />
-              <stop offset="100%" stopColor="#fff" stopOpacity="0" />
-            </linearGradient>
-            <linearGradient id="SVG9onTObtB" x1="50%" x2="49.953%" y1="0%" y2="73.438%">
-              <stop offset="0%" stopColor="#fff" />
-              <stop offset="100%" stopColor="#fff" stopOpacity="0" />
-            </linearGradient>
-            <circle id="SVGN5eQqeMK" cx="128" cy="128" r="128" />
-          </defs>
-          <mask id="SVGMX2wGdvm" fill="#fff">
-            <use href="#SVGN5eQqeMK" />
-          </mask>
-          <g mask="url(#SVGMX2wGdvm)">
-            <circle cx="128" cy="128" r="128" fill="#000" />
-            <path fill="url(#SVGrDou6dwg)" d="M212.634 224.028L98.335 76.8H76.8v102.357h17.228V98.68L199.11 234.446a128 128 0 0 0 13.524-10.418" />
-            <path fill="url(#SVG9onTObtB)" d="M163.556 76.8h17.067v102.4h-17.067z" />
-          </g>
+        <svg viewBox="0 0 256 256" className="w-full h-full">
+          <circle cx="128" cy="128" r="128" fill="#000" />
+          <path fill="#fff" d="M212.634 224.028L98.335 76.8H76.8v102.357h17.228V98.68L199.11 234.446a128 128 0 0 0 13.524-10.418" />
+          <path fill="#fff" d="M163.556 76.8h17.067v102.4h-17.067z" />
         </svg>
       ),
     },
@@ -157,22 +172,34 @@ export default function Home() {
 
   return (
     <div className="min-h-screen w-full overflow-x-hidden bg-[#0B0F19] text-[#E2E8F0] flex flex-col font-[family-name:var(--font-plus-jakarta)] selection:bg-orange-500/30 selection:text-orange-300">
-      {/* Fully Transparent Fixed Navigation */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-transparent px-4 sm:px-6 py-3 sm:py-5 transition-all">
-        <div className="max-w-7xl mx-auto flex items-center justify-center sm:justify-end">
-          <nav className="flex items-center gap-1 sm:gap-6 font-mono text-[11px] sm:text-xs text-slate-200 bg-black/50 backdrop-blur-md px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full border border-white/10 shadow-lg max-w-full overflow-x-auto whitespace-nowrap">
-            <a href="#home" className="px-3.5 py-1.5 rounded-full hover:text-orange-400 hover:bg-white/10 transition-colors">
-              Home
-            </a>
-            <a href="#about" className="px-3.5 py-1.5 rounded-full hover:text-orange-400 hover:bg-white/10 transition-colors">
-              About
-            </a>
-            <a href="#portfolio" className="px-3.5 py-1.5 rounded-full hover:text-orange-400 hover:bg-white/10 transition-colors">
-              Portfolio
-            </a>
-            <a href="#contact" className="px-3.5 py-1.5 rounded-full hover:text-orange-400 hover:bg-white/10 transition-colors">
-              Contact
-            </a>
+      <header className="fixed bottom-6 left-0 right-0 z-50 px-4 sm:px-6 pointer-events-none md:top-0 md:bottom-auto md:py-5">
+        <div className="max-w-7xl mx-auto flex items-center justify-center pointer-events-auto md:justify-end">
+          <nav className="flex items-center justify-center p-2 rounded-2xl md:rounded-full bg-[#1A1F2E]/90 backdrop-blur-md border border-white/5 shadow-2xl max-w-full gap-2 w-[85%] md:w-auto mx-auto md:mx-0">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeSection === item.id;
+
+              return (
+                <a
+                  key={item.id}
+                  href={item.href}
+                  onClick={() => setActiveSection(item.id)}
+                  className={`
+                    flex flex-col md:flex-row items-center justify-center flex-1 md:flex-none
+                    py-2.5 md:py-2 md:px-5 rounded-xl md:rounded-full transition-all duration-300
+                    ${isActive
+                      ? "bg-orange-500/10 text-orange-400"
+                      : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
+                    }
+                  `}
+                >
+                  <Icon className={`w-5 h-5 md:w-4 md:h-4 md:mr-2 ${isActive ? 'mb-1 md:mb-0' : 'mb-1 md:mb-0 opacity-80'}`} />
+                  <span className={`text-[10px] md:text-sm font-medium ${isActive ? 'block' : 'block md:inline'}`}>
+                    {item.label}
+                  </span>
+                </a>
+              );
+            })}
           </nav>
         </div>
       </header>
@@ -303,28 +330,59 @@ export default function Home() {
             </div>
 
             {/* Orbiting Animation with Cards & Path */}
-            <div className="h-[450px] sm:h-[500px] md:h-[550px] w-full flex items-center justify-center overflow-visible relative mt-2 sm:mt-4">
+            {/* Mobile Orbit (Clean & Spaced Spacing) */}
+            <div className="h-[460px] w-full flex md:hidden items-center justify-center overflow-visible relative">
               <OrbitImages
                 customItems={techItems.map((item, idx) => (
                   <div
                     key={idx}
-                    className="w-28 h-22 sm:w-32 sm:h-26 bg-[#121824]/95 border border-slate-800 rounded-2xl p-2.5 sm:p-3 flex flex-col items-center justify-center gap-1.5 shadow-xl backdrop-blur-md hover:border-slate-600 transition-colors group cursor-pointer"
+                    className="w-24 h-20 bg-[#121824]/95 border border-slate-800 rounded-xl p-2 flex flex-col items-center justify-center gap-1 shadow-xl backdrop-blur-md hover:border-slate-600 transition-colors group cursor-pointer"
                   >
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center transition-transform group-hover:scale-110">
+                    <div className="w-7 h-7 flex items-center justify-center transition-transform group-hover:scale-110">
                       {item.icon}
                     </div>
-                    <span className="font-mono text-[10px] sm:text-xs font-semibold text-slate-300 group-hover:text-white transition-colors text-center leading-tight">
+                    <span className="font-mono text-[10px] font-semibold text-slate-300 group-hover:text-white transition-colors text-center leading-tight">
                       {item.name}
                     </span>
                   </div>
                 ))}
                 shape="ellipse"
-                baseWidth={850}
-                radiusX={420}
-                radiusY={160}
+                baseWidth={650}
+                radiusX={300}
+                radiusY={170}
                 rotation={-3}
                 duration={35}
-                itemSize={135}
+                itemSize={105}
+                showPath={true}
+                pathColor="rgba(255, 255, 255, 0.15)"
+                pathWidth={2}
+                responsive={true}
+              />
+            </div>
+
+            {/* Desktop Orbit (Unchanged Layout) */}
+            <div className="h-[550px] w-full hidden md:flex items-center justify-center overflow-visible relative mt-4">
+              <OrbitImages
+                customItems={techItems.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="w-32 h-24 bg-[#121824]/95 border border-slate-800 rounded-2xl p-3 flex flex-col items-center justify-center gap-1.5 shadow-xl backdrop-blur-md hover:border-slate-600 transition-colors group cursor-pointer"
+                  >
+                    <div className="w-10 h-10 flex items-center justify-center transition-transform group-hover:scale-110">
+                      {item.icon}
+                    </div>
+                    <span className="font-mono text-xs font-semibold text-slate-300 group-hover:text-white transition-colors text-center leading-tight">
+                      {item.name}
+                    </span>
+                  </div>
+                ))}
+                shape="ellipse"
+                baseWidth={1000}
+                radiusX={440}
+                radiusY={170}
+                rotation={-3}
+                duration={35}
+                itemSize={130}
                 showPath={true}
                 pathColor="rgba(255, 255, 255, 0.15)"
                 pathWidth={2}
