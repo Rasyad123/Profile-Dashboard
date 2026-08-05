@@ -3,12 +3,11 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { motion } from "motion/react";
 import { Home as HomeIcon, Code2, User, Mail } from "lucide-react";
-import SpotlightCard from "./components/SpotlightCard";
-import BorderGlow from "./components/BorderGlow";
-import OrbitImages from "./components/OrbitImages";
 
 const Lanyard = dynamic(() => import("./components/Lanyard"), { ssr: false });
+const OrbitImages = dynamic(() => import("./components/OrbitImages"), { ssr: false });
 
 export default function Home() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
@@ -174,7 +173,7 @@ export default function Home() {
     <div className="min-h-screen w-full overflow-x-hidden bg-[#0B0F19] text-[#E2E8F0] flex flex-col font-[family-name:var(--font-plus-jakarta)] selection:bg-orange-500/30 selection:text-orange-300">
       <header className="fixed bottom-6 left-0 right-0 z-50 px-4 sm:px-6 pointer-events-none md:top-0 md:bottom-auto md:py-5">
         <div className="max-w-7xl mx-auto flex items-center justify-center pointer-events-auto md:justify-end">
-          <nav className="flex items-center justify-center p-2 rounded-2xl md:rounded-full bg-[#1A1F2E]/90 backdrop-blur-md border border-white/5 shadow-2xl max-w-full gap-2 w-[85%] md:w-auto mx-auto md:mx-0">
+          <nav className="relative flex items-center justify-center p-1.5 md:p-2 rounded-2xl md:rounded-full bg-slate-950/40 backdrop-blur-2xl backdrop-saturate-150 border border-white/15 shadow-[0_10px_30px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.2)] max-w-full gap-1 md:gap-2 w-[88%] md:w-auto mx-auto md:mx-0">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeSection === item.id;
@@ -185,15 +184,19 @@ export default function Home() {
                   href={item.href}
                   onClick={() => setActiveSection(item.id)}
                   className={`
-                    flex flex-col md:flex-row items-center justify-center flex-1 md:flex-none
-                    py-2.5 md:py-2 md:px-5 rounded-xl md:rounded-full transition-all duration-300
-                    ${isActive
-                      ? "bg-orange-500/10 text-orange-400"
-                      : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
-                    }
+                    relative flex flex-col md:flex-row items-center justify-center flex-1 md:flex-none
+                    py-2 md:py-2 md:px-5 rounded-xl md:rounded-full transition-colors duration-200 z-10
+                    ${isActive ? "text-orange-400 font-semibold" : "text-slate-400 hover:text-slate-200"}
                   `}
                 >
-                  <Icon className={`w-5 h-5 md:w-4 md:h-4 md:mr-2 ${isActive ? 'mb-1 md:mb-0' : 'mb-1 md:mb-0 opacity-80'}`} />
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeTabGlass"
+                      className="absolute inset-0 rounded-xl md:rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-[0_4px_12px_rgba(249,115,22,0.15),inset_0_1px_1px_rgba(255,255,255,0.3)] z-[-1]"
+                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    />
+                  )}
+                  <Icon className={`w-5 h-5 md:w-4 md:h-4 md:mr-2 ${isActive ? 'mb-0.5 md:mb-0' : 'mb-0.5 md:mb-0 opacity-70'}`} />
                   <span className={`text-[10px] md:text-sm font-medium ${isActive ? 'block' : 'block md:inline'}`}>
                     {item.label}
                   </span>
@@ -210,7 +213,7 @@ export default function Home() {
           {/* Fullscreen Background Image */}
           <div className="absolute inset-0 z-0">
             <Image
-              src="/pixel-cats-sunset.webp"
+              src="/home.png"
               alt="Two Pixel Cats Watching Sunset Over Ocean"
               fill
               priority
@@ -250,40 +253,103 @@ export default function Home() {
         </section>
 
         {/* SECTION 2: ABOUT (Matching Screenshot Style) */}
-        <section id="about" className="bg-[#0B0F19] bg-tactical-grid min-h-screen py-12 sm:py-24 px-4 sm:px-6 md:px-16 flex flex-col justify-between border-b border-slate-800/80 relative">
-          <div className="max-w-7xl mx-auto w-full grid grid-cols-12 gap-2 sm:gap-6 lg:gap-12 items-center my-auto">
+        <section id="about" className="bg-[#0B0F19] bg-tactical-grid min-h-screen py-8 sm:py-24 px-4 sm:px-6 md:px-16 flex flex-col justify-center border-b border-slate-800/80 relative">
+          {/* Mobile Layout (md:hidden) */}
+          <div className="flex md:hidden flex-col justify-start w-full py-4 space-y-5 my-auto">
+            {/* Top: Header Tag & Single-line Horizontal Headline */}
+            <div className="space-y-2 text-left">
+              <div className="flex items-center gap-1.5 text-xs font-mono text-slate-400 tracking-widest uppercase">
+                <span className="text-orange-400">✦</span>
+                <span>AVAILABLE FOR WORK</span>
+              </div>
+
+              <h2 className="text-[9.2vw] font-extrabold tracking-tighter leading-none whitespace-nowrap font-[family-name:var(--font-space-grotesk)]">
+                <span className="text-white">Fullstack </span>
+                <span className="text-slate-400">Developer</span>
+              </h2>
+            </div>
+
+            {/* Bottom: Left = Bio Details, Right = Larger Lanyard */}
+            <div className="grid grid-cols-12 gap-2 items-center pt-1">
+              {/* Left: Text & Bio Details */}
+              <div className="col-span-6 space-y-2.5 text-left pr-1">
+                <div className="space-y-1">
+                  <p className="text-slate-300 font-mono text-xs font-bold">Hello</p>
+                  <p className="text-slate-300 text-[11px] leading-relaxed font-normal">
+                  Perkenalkan nama saya Rasyad Fajar biasa di panggil Rasyad , Saya Lulusan SMA ABBS Surakarta dan sekarang Mahasiswa baru di Perguruan Tinggi Univertsitas Sebelas Maret(UNS) dengan program studi Pendidikan Teknik Informatika dan Komputer(PTIK)
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-1 font-mono text-[9px] pt-0.5">
+                  {["Typescript", "React.js", "Tailwind"].map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-2 py-0.5 rounded-full bg-slate-900/90 border border-slate-800 text-slate-300"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="space-y-0.5 font-mono text-[9px] text-slate-400 pt-1.5 border-t border-slate-800/80">
+                  <p className="flex items-center gap-1">
+                    <span>↓</span> explore work
+                  </p>
+                  <p className="flex items-center gap-1">
+                    <span>↗</span> open to work
+                  </p>
+                </div>
+              </div>
+
+              {/* Right: Larger Lanyard Card */}
+              <div className="col-span-6 relative w-full h-[340px] flex justify-center items-center">
+                <Lanyard
+                  position={[0, 0, 22]}
+                  gravity={[0, -40, 0]}
+                  frontImage="/profile-photo.jpg"
+                  backImage="/profile-photo.jpg"
+                  imageFit="cover"
+                  lanyardImage="/lanyard.png"
+                  lanyardWidth={3.2}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop Layout (hidden md:grid) */}
+          <div className="hidden md:grid max-w-7xl mx-auto w-full grid-cols-12 gap-6 lg:gap-12 items-center my-auto">
             {/* Left Column: Text & Skills */}
-            <div className="col-span-7 space-y-3 sm:space-y-8 text-left">
+            <div className="col-span-7 space-y-8 text-left">
               {/* Tag Header */}
-              <div className="flex items-center gap-1 sm:gap-2 text-[9px] sm:text-xs font-mono text-slate-400 tracking-widest uppercase">
+              <div className="flex items-center gap-2 text-xs font-mono text-slate-400 tracking-widest uppercase">
                 <span className="text-orange-400">✦</span>
                 <span>AVAILABLE FOR WORK</span>
               </div>
 
               {/* Big Bold Headline */}
-              <div className="space-y-0.5 sm:space-y-1 font-[family-name:var(--font-space-grotesk)]">
-                <h2 className="text-base sm:text-4xl lg:text-7xl font-extrabold text-white tracking-tight leading-none">
+              <div className="space-y-1 font-[family-name:var(--font-space-grotesk)]">
+                <h2 className="text-4xl lg:text-7xl font-extrabold text-white tracking-tight leading-none">
                   Fullstack
                 </h2>
-                <h2 className="text-base sm:text-4xl lg:text-7xl font-extrabold text-slate-400 tracking-tight leading-none">
+                <h2 className="text-4xl lg:text-7xl font-extrabold text-slate-400 tracking-tight leading-none">
                   Developer
                 </h2>
               </div>
 
               {/* Bio Subtext */}
-              <div className="space-y-1 sm:space-y-3 max-w-lg">
-                <p className="text-slate-300 font-mono text-[10px] sm:text-sm">Hello</p>
-                <p className="text-slate-400 text-[10px] sm:text-sm leading-relaxed font-normal">
+              <div className="space-y-3 max-w-lg">
+                <p className="text-slate-300 font-mono text-sm">Hello</p>
+                <p className="text-slate-400 text-sm leading-relaxed font-normal">
                   Perkenalkan nama saya Rasyad Fajar biasa di panggil Rasyad , Saya Lulusan SMA ABBS Surakarta dan sekarang Mahasiswa baru di Perguruan Tinggi Univertsitas Sebelas Maret(UNS) dengan program studi Pendidikan Teknik Informatika dan Komputer(PTIK)
                 </p>
               </div>
 
               {/* Tag Pills */}
-              <div className="flex flex-wrap gap-1 sm:gap-2.5 font-mono text-[9px] sm:text-xs pt-0.5">
+              <div className="flex flex-wrap gap-2.5 font-mono text-xs pt-0.5">
                 {["Typescript", "React.js", "Tailwind"].map((tech) => (
                   <span
                     key={tech}
-                    className="px-2 sm:px-4 py-0.5 sm:py-1.5 rounded-full bg-slate-900/90 border border-slate-800 text-slate-300 hover:border-orange-500/40 hover:text-white transition-colors"
+                    className="px-4 py-1.5 rounded-full bg-slate-900/90 border border-slate-800 text-slate-300 hover:border-orange-500/40 hover:text-white transition-colors"
                   >
                     {tech}
                   </span>
@@ -291,18 +357,18 @@ export default function Home() {
               </div>
 
               {/* Status Footer Lines */}
-              <div className="space-y-1 sm:space-y-1.5 font-mono text-[9px] sm:text-xs text-slate-500 pt-2 sm:pt-4 border-t border-slate-800/60 max-w-md">
-                <p className="flex items-center gap-1 sm:gap-2 text-slate-400">
+              <div className="space-y-1.5 font-mono text-xs text-slate-500 pt-4 border-t border-slate-800/60 max-w-md">
+                <p className="flex items-center gap-2 text-slate-400">
                   <span>↓</span> explore my work below
                 </p>
-                <p className="flex items-center gap-1 sm:gap-2 text-slate-400">
+                <p className="flex items-center gap-2 text-slate-400">
                   <span>↗</span> open to full-time & freelance opportunities
                 </p>
               </div>
             </div>
 
             {/* Right Column: Interactive 3D Physics Lanyard Card */}
-            <div className="col-span-5 flex justify-center lg:justify-end relative w-full h-[350px] sm:h-[650px] lg:h-[800px]">
+            <div className="col-span-5 flex justify-end relative w-full h-[650px] lg:h-[800px]">
               <Lanyard
                 position={[0, 0, 22]}
                 gravity={[0, -40, 0]}
